@@ -20,6 +20,7 @@ class Weather
     @city = map_data[:results][0][:locations][0][:adminArea5]
     @state = map_data[:results][0][:locations][0][:adminArea3]
     @country =  map_data[:results][0][:locations][0][:adminArea1]
+    date_and_time = DateTime.strptime("#{(weather_data[:current][:dt] + weather_data[:timezone_offset])}",'%s').strftime("%l:%M %p, %B %d")
     @weather_description = weather_data[:current][:weather][0][:description]
     @actual_temp = weather_description = weather_data[:current][:temp].to_i
     @high_temp = weather_data[:daily][0][:temp][:max].to_i
@@ -29,9 +30,8 @@ class Weather
     @visibility = weather_data[:current][:visibility]
     @uv_index = weather_data[:current][:uvi].to_i
     @date = Time.at(weather_data[:dt]).strftime("%m/%d/%y %I:%M %p")
-
   end
-  require "pry"; binding.pry
+
   def convert(temp)
     ((((temp - 273.15)*9)/5)+32).round(1)
   end

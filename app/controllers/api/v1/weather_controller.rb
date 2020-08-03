@@ -1,5 +1,5 @@
 class Api::V1::WeatherController < ApplicationController
-  def index
+  def show
 
       #making the api call
       map_response = Faraday.get("http://www.mapquestapi.com/geocoding/v1/address") do |req|
@@ -28,6 +28,7 @@ class Api::V1::WeatherController < ApplicationController
     render json: weather_data
 
     #Upper_left_box
+    date_and_time = DateTime.strptime("#{(weather_data[:current][:dt] + weather_data[:timezone_offset])}",'%s').strftime("%l:%M %p, %B %d")
     city = map_data[:results][0][:locations][0][:adminArea5]
     state = map_data[:results][0][:locations][0][:adminArea3]
     country =  map_data[:results][0][:locations][0][:adminArea1]
@@ -77,6 +78,13 @@ class Api::V1::WeatherController < ApplicationController
     hour_eight_temp = weather_data[:hourly][7][:temp]
     hour_eight_description = weather_data[:hourly][7][:weather][0][:description]
     #weekly_bottom
-    
+
+    day_1 = weather_data[:hourly][0]
+    day_2 = weather_data[:hourly][1]
+    day_3 = weather_data[:hourly][2]
+    day_4 = weather_data[:hourly][3]
+    day_5 = weather_data[:hourly][4]
+    day_6 = weather_data[:hourly][5]
+    day_7 = weather_data[:hourly][6]
   end
 end
