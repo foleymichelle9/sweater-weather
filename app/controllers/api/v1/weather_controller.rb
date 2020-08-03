@@ -1,6 +1,20 @@
 class Api::V1::WeatherController < ApplicationController
   def index
 
+    #making the api call
+
+      trail_response = Faraday.get("https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10") do |req|
+      #passing in params
+
+        req.params["key"] = ENV["Hike_API"]
+        req.params["location"] = params[:location]
+        req.params["lat"] = map_data[:results][0][:locations][0][:latLng][:lat]
+        req.params["lon"] = map_data[:results][0][:locations][0][:latLng][:lng]
+      end
+    #making it pretty and setting it to variable
+
+      trail_data = JSON.parse(trail_response.body, symbolize_names: true)
+      require "pry"; binding.pry
       #making the api call
       map_response = Faraday.get("http://www.mapquestapi.com/geocoding/v1/address") do |req|
         #passing in params
@@ -26,6 +40,18 @@ class Api::V1::WeatherController < ApplicationController
     weather_data = JSON.parse(weather_response.body, symbolize_names: true)
 
     render json: weather_data
+
+    require "pry"; binding.pry
+    #****************Assessment**************************
+    # current forecast for the start location
+    # name of the trail - done
+    # summary of each trail - done
+    # difficulty of each trail - done
+    # location of each trail -done
+    # estimated travel time for each trail
+    name = trail_data[:trails][0][:name]
+    summary = trail_data[:trails][0][:summary]
+    summary = trail_data[:trails][0][:difficulty]
 
     #Upper_left_box
     city = map_data[:results][0][:locations][0][:adminArea5]
@@ -77,6 +103,6 @@ class Api::V1::WeatherController < ApplicationController
     hour_eight_temp = weather_data[:hourly][7][:temp]
     hour_eight_description = weather_data[:hourly][7][:weather][0][:description]
     #weekly_bottom
-    
+
   end
 end

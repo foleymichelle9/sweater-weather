@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get "/data/get-trails", to: "trails#show"
       get "/weather", to: "weather#index"
-      get '/trail', to: 'trail#show'
     end
   end
 end
