@@ -1,20 +1,7 @@
 class Api::V1::WeatherController < ApplicationController
   def index
 
-    #making the api call
 
-      trail_response = Faraday.get("https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10") do |req|
-      #passing in params
-
-        req.params["key"] = ENV["Hike_API"]
-        req.params["location"] = params[:location]
-        req.params["lat"] = map_data[:results][0][:locations][0][:latLng][:lat]
-        req.params["lon"] = map_data[:results][0][:locations][0][:latLng][:lng]
-      end
-    #making it pretty and setting it to variable
-
-      trail_data = JSON.parse(trail_response.body, symbolize_names: true)
-      require "pry"; binding.pry
       #making the api call
       map_response = Faraday.get("http://www.mapquestapi.com/geocoding/v1/address") do |req|
         #passing in params
@@ -41,7 +28,22 @@ class Api::V1::WeatherController < ApplicationController
 
     render json: weather_data
 
-    require "pry"; binding.pry
+    #making the api call
+
+      trail_response = Faraday.get("https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10") do |req|
+      #passing in params
+
+        req.params["key"] = ENV["Hike_API"]
+        req.params["location"] = params[:location]
+        req.params["lat"] = map_data[:results][0][:locations][0][:latLng][:lat]
+        req.params["lon"] = map_data[:results][0][:locations][0][:latLng][:lng]
+      end
+    #making it pretty and setting it to variable
+
+      trail_data = JSON.parse(trail_response.body, symbolize_names: true)
+  
+
+
     #****************Assessment**************************
     # current forecast for the start location
     # name of the trail - done
@@ -53,7 +55,7 @@ class Api::V1::WeatherController < ApplicationController
     summary = trail_data[:trails][0][:summary]
     summary = trail_data[:trails][0][:difficulty]
 
-    #Upper_left_box
+    #daily_report
     city = map_data[:results][0][:locations][0][:adminArea5]
     state = map_data[:results][0][:locations][0][:adminArea3]
     country =  map_data[:results][0][:locations][0][:adminArea1]
@@ -62,7 +64,7 @@ class Api::V1::WeatherController < ApplicationController
     high_temp = weather_data[:daily][0][:temp][:max].to_i
     low_temp = weather_data[:daily][0][:temp][:min].to_i
 
-    # Upper_Right
+
     weather_description = weather_data[:current][:weather][0][:description]
     feels_like = weather_data[:current][:feels_like].to_i
     humidity = "#{weather_data[:current][:humidity]}%"
