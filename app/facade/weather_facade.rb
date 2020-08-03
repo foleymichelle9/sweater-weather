@@ -6,6 +6,7 @@ class WeatherFacade
 
     @id = 0
     @weather_data = weather_data
+    require "pry"; binding.pry
     # @summary = weather_data[:weather][0][:description]
     # @temp = convert(weather_data[:main][:temp])
     # @temp_low = convert(weather_data[:main][:temp_min])
