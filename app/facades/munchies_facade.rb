@@ -19,7 +19,7 @@ class MunchiesFacade
 
   end
 
-  def forecast
+  def destination_forecast
     {
       current: get_serialized_forecast[:data][:attributes][:weather_description],
     }
