@@ -7,7 +7,7 @@ RSpec.describe "Munchie Request" do
     expect(response).to be_successful
 
     parsed_munchies_response = JSON.parse(response.body, symbolize_names: true)
-
+    require "pry"; binding.pry
     expect(parsed_munchies_response).to have_key(:data)
     expect(parsed_munchies_response[:data]).to have_key(:id)
     expect(parsed_munchies_response[:data]).to have_key(:type)

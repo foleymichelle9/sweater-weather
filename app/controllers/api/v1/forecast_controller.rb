@@ -6,7 +6,7 @@ class Api::V1::ForecastController < ApplicationController
 
 
 
-    weather = WeatherService.new
+    weather = ForecastService.new
     weather_object = weather.get_weather_objects(map_object)
     render json: ForecastSerializer.new(weather_object)
   end
