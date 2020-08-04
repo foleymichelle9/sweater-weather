@@ -25,25 +25,18 @@ class MunchiesFacade
     }
   end
 
-
   private
 
+  def get_serialized_forecast
+    json = ForecastSerializer.new(get_forecast_object).serialized_json
+    JSON.parse(json, symbolize_names: true)
+  end
 
-    def get_serialized_forecast
-      json = ForecastSerializer.new(get_forecast_object).serialized_json
-      JSON.parse(json, symbolize_names: true)
-    end
+  def get_forecast_object
+    map = MapService.new
+    map_object = map.get_map_objects(@end_location)
 
-    def get_forecast_object
-      map = MapService.new
-      map_object = map.get_map_objects(@end_location)
-
-
-
-      weather = ForecastService.new
-      weather_object = weather.get_weather_objects(map_object)
-
-      # forecast_service = ForecastService.new(@end_location)
-      # forecast_service.get_forecast_objects
-    end
+    weather = ForecastService.new
+    weather.get_weather_objects(map_object)
+  end
 end
