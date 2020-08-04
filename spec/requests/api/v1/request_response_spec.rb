@@ -4,19 +4,19 @@ RSpec.describe "Weather API", type: "request" do
   describe "GET api/v1/weather" do
     it "Can return weather info" do
 
-      get "/api/v1/weather?location=denver,co"
+      get "/api/v1/forecast?location=denver,co"
 
       expect(response).to be_successful
       weather_data = JSON.parse(response.body, symbolize_names: true)
-      require "pry"; binding.pry
-      expect(weather_data[:current][:city_state]).to_not eq(nil)
-      # expect(weather[:now][:country]).to_not eq(nil)
-      # expect(weather[:now][:time]).to_not eq(nil)
-      # expect(weather[:now][:month_day]).to_not eq(nil)
-      # expect(weather[:now][:weather_description]).to_not eq(nil)
-      # expect(weather[:now][:weather_actual_temp]).to_not eq(nil)
-      # expect(weather[:now][:weather_high_temp]).to_not eq(nil)
-      # expect(weather[:now][:weather_low_temp]).to_not eq(nil)
+      
+    # expect(weather_data[:data][:attributes][:location_info][:city]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:location_info][:state]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:location_info][:country]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:current_time_month_day]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:weather_description]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:actual_temp]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:high_temp]).to_not eq(nil)
+    #  expect(weather_data[:data][:attributes][:low_temp]).to_not eq(nil)
     end
   end
 end
