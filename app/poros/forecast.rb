@@ -17,6 +17,7 @@ class Forecast
 
   def initialize(weather_info, map_object)
     @timezone_offset = weather_info[:timezone_offset]
+
     @actual_temp = weather_description = weather_info[:current][:temp].to_i
     @high_temp = weather_info[:daily][0][:temp][:max].to_i
     @low_temp = weather_info[:daily][0][:temp][:min].to_i
@@ -28,8 +29,8 @@ class Forecast
     @current_time_month_day = find_date_time(weather_info[:current][:dt], "date")
     @sunrise_time = find_date_time(weather_info[:current][:sunrise], "time")
     @sunset_time = find_date_time(weather_info[:current][:sunset], "time")
-    @hourly_weather_forecast = hour_info(weather_info)
-    @week_weather_forecast = week_info(weather_info)
+    #@hourly_weather_forecast = hour_info(weather_info)
+    #@week_weather_forecast = week_info(weather_info)
     @location_info = location(map_object)
   end
 
