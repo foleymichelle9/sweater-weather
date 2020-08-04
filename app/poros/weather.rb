@@ -30,6 +30,8 @@ class Weather
     @visibility = weather_data[:current][:visibility]
     @uv_index = weather_data[:current][:uvi].to_i
     @date = Time.at(weather_data[:dt]).strftime("%m/%d/%y %I:%M %p")
+  
+
   end
 
   def convert(temp)

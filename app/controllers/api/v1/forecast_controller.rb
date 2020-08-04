@@ -1,4 +1,4 @@
-class Api::V1::WeatherController < ApplicationController
+class Api::V1::ForecastController < ApplicationController
   def show
 
       #making the api call
@@ -12,7 +12,7 @@ class Api::V1::WeatherController < ApplicationController
 
 
       #making the api call
-      weather_response = Faraday.get("https://api.openweathermap.org/data/2.5/onecall") do |req|
+      forecast_response = Faraday.get("https://api.openweathermap.org/data/2.5/onecall") do |req|
         #passing in params
         req.params[:units] = "imperial"
         req.params["lat"] = map_data[:results][0][:locations][0][:latLng][:lat]
@@ -23,22 +23,22 @@ class Api::V1::WeatherController < ApplicationController
       end
 
 
-    weather_data = JSON.parse(weather_response.body, symbolize_names: true)
-
-    render json: weather_data
+    forecast_data = JSON.parse(forecast_response.body, symbolize_names: true)
+      require "pry"; binding.pry
+    render json: forecast_data
 
     #Upper_left_box
-    date_and_time = DateTime.strptime("#{(weather_data[:current][:dt] + weather_data[:timezone_offset])}",'%s').strftime("%l:%M %p, %B %d")
+    date_and_time = DateTime.strptime("#{(forecast_data[:current][:dt] + forecast_data[:timezone_offset])}",'%s').strftime("%l:%M %p, %B %d")
     city = map_data[:results][0][:locations][0][:adminArea5]
     state = map_data[:results][0][:locations][0][:adminArea3]
     country =  map_data[:results][0][:locations][0][:adminArea1]
-    weather_description = weather_data[:current][:weather][0][:description]
-    actual_temp = weather_description = weather_data[:current][:temp].to_i
-    high_temp = weather_data[:daily][0][:temp][:max].to_i
-    low_temp = weather_data[:daily][0][:temp][:min].to_i
+    forecast_description = weather_data[:current][:weather][0][:description]
+    actual_temp = forecast_description = forecast_data[:current][:temp].to_i
+    high_temp = forecast_data[:daily][0][:temp][:max].to_i
+    low_temp = forecast_data[:daily][0][:temp][:min].to_i
 
     # Upper_Right
-    weather_description = weather_data[:current][:weather][0][:description]
+    forecast_description = forecast_data[:current][:weather][0][:description]
     feels_like = weather_data[:current][:feels_like].to_i
     humidity = "#{weather_data[:current][:humidity]}%"
     visibility = weather_data[:current] #????????

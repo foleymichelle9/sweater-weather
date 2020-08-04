@@ -8,8 +8,8 @@ RSpec.describe "Weather API", type: "request" do
 
       expect(response).to be_successful
       weather_data = JSON.parse(response.body, symbolize_names: true)
-      # require "pry"; binding.pry
-      #expect(weather_data[:now][:city_state]).to_not eq(nil)
+      require "pry"; binding.pry
+      expect(weather_data[:current][:city_state]).to_not eq(nil)
       # expect(weather[:now][:country]).to_not eq(nil)
       # expect(weather[:now][:time]).to_not eq(nil)
       # expect(weather[:now][:month_day]).to_not eq(nil)
