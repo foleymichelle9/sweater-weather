@@ -67,3 +67,11 @@ RSpec.configure do |config|
   config.allow_http_connections_when_no_cassette = true
   end
 end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+
+    with.library :rails
+  end
+end

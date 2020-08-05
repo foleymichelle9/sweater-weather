@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "User Creation" do
-  
-  it "User Registration" do
+
+  xit "User Registration" do
     user_params = {
       "email": "example@example.com",
       "password": "password",
