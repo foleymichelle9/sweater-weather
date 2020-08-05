@@ -68,6 +68,7 @@ class ForecastFacade
   end
 
   def week_weather_forecast
+    require "pry"; binding.pry
     week_info(@forecast_info)
   end
 

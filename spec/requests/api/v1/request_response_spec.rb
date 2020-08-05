@@ -33,6 +33,7 @@ RSpec.describe "OpenWeather API", type: "request" do
       expect(weather_data[:data][:attributes]).to have_key(:week_weather_forecast)
       expect(weather_data[:data][:attributes]).to have_key(:hourly_weather_forecast)
       end
+    end
 
     it "Landing Page Top Left" do
       get "/api/v1/forecast?location=denver,co"
@@ -47,6 +48,23 @@ RSpec.describe "OpenWeather API", type: "request" do
       expect(weather_data[:data][:attributes][:uv_index]).to_not eq(nil)
       expect(weather_data[:data][:attributes][:sunrise_time]).to_not eq(nil)
       expect(weather_data[:data][:attributes][:sunset_time]).to_not eq(nil)
+    end
+
+      xit "Landing page bottom: daily" do
+      get "/api/v1/forecast?location=denver,co"
+
+      expect(response).to be_successful
+
+      forecast_response = JSON.parse(response.body, symbolize_names: true)
+
+     forecast_response[:data][:attributes][:hourly_weather_forecast][0..7].each do |hour_forecast|
+       expect(hour_forecast).to have_key(:time)
+       expect(hour_forecast).to have_key(:temp)
+       expect(hour_forecast).to have_key(:description)
+
+       expect(hour_forecast[:time]).to_not eq(nil)
+       expect(hour_forecast[:temp]).to_not eq(nil)
+       expect(hour_forecast[:description]).to_not eq(nil)
       end
     end
 
@@ -60,6 +78,5 @@ RSpec.describe "OpenWeather API", type: "request" do
 
         expect(parsed_background[:data][:attributes][:image]).to_not eq(nil)
       end
-    end
-
   end
+end
