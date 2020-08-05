@@ -1,4 +1,5 @@
 class WeatherService
+
   def get_weather_objects(map_object)
     weather_info = get_weather_info(map_object)
     Forecast.new(weather_info, map_object)
@@ -17,5 +18,6 @@ class WeatherService
      req.params[:exclude] = "minutely"
    end
     weather_data = JSON.parse(weather_response.body, symbolize_names: true)
+    #require "pry"; binding.pry
   end
 end

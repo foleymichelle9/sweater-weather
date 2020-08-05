@@ -4,6 +4,15 @@ class MapService
     Map.new(map_info)
   end
 
+  def directions(origin, destination)
+    directions = Faraday.get("http://www.mapquestapi.com/directions/v2/route") do |req|
+      req.params[:from] = origin
+      req.params[:to] = destination
+      req.params[:key] = ENV["Map_API"]
+    end
+    map_data = JSON.parse(directions.body, symbolize_names: true)
+  end
+
   private
 
     def get_map(city_state)
@@ -12,6 +21,5 @@ class MapService
         req.params[:key] = ENV["Map_API"]
       end
       map_data = JSON.parse(map_response.body, symbolize_names: true)
-
-   end
+    end
 end

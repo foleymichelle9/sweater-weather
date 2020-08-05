@@ -50,14 +50,14 @@ RSpec.describe "OpenWeather API", type: "request" do
       expect(weather_data[:data][:attributes][:sunset_time]).to_not eq(nil)
     end
 
-      xit "Landing page bottom: daily" do
+      it "Landing page bottom: daily" do
       get "/api/v1/forecast?location=denver,co"
 
       expect(response).to be_successful
 
       forecast_response = JSON.parse(response.body, symbolize_names: true)
-
-     forecast_response[:data][:attributes][:hourly_weather_forecast][0..7].each do |hour_forecast|
+      #require "pry"; binding.pry
+      forecast_response[:data][:attributes][:hourly_weather_forecast][0..7].each do |hour_forecast|
        expect(hour_forecast).to have_key(:time)
        expect(hour_forecast).to have_key(:temp)
        expect(hour_forecast).to have_key(:description)
@@ -68,6 +68,25 @@ RSpec.describe "OpenWeather API", type: "request" do
       end
     end
 
+    it "bottom of page: Week" do
+      get "/api/v1/forecast?location=denver,co"
+
+      expect(response).to be_successful
+
+      forecast_response = JSON.parse(response.body, symbolize_names: true)
+
+      forecast_response[:data][:attributes][:week_weather_forecast][0..6].each do |week_forecast|
+        expect(week_forecast).to have_key(:description)
+        expect(week_forecast).to have_key(:precip)
+        expect(week_forecast).to have_key(:high_temp)
+        expect(week_forecast).to have_key(:low_temp)
+
+        expect(week_forecast[:description]).to_not eq(nil)
+        expect(week_forecast[:precip]).to_not eq(nil)
+        expect(week_forecast[:high_temp]).to_not eq(nil)
+        expect(week_forecast[:low_temp]).to_not eq(nil)
+      end
+    end
     describe "Forecast Background Images" do
       it "Background Request" do
         get "/api/v1/backgrounds?location=denver,co"
