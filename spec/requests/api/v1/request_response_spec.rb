@@ -35,8 +35,8 @@ RSpec.describe "OpenWeather API", type: "request" do
       end
     end
 
-    describe "Forecast Background Images by City" do
-      it "Background Image Request" do
+    describe "Forecast Background Images" do
+      it "Background Request" do
         get "/api/v1/backgrounds?location=denver,co"
 
         expect(response).to be_successful
