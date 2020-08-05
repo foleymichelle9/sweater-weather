@@ -33,6 +33,21 @@ RSpec.describe "OpenWeather API", type: "request" do
       expect(weather_data[:data][:attributes]).to have_key(:week_weather_forecast)
       expect(weather_data[:data][:attributes]).to have_key(:hourly_weather_forecast)
       end
+
+    it "Landing Page Top Left" do
+      get "/api/v1/forecast?location=denver,co"
+
+      expect(response).to be_successful
+
+      weather_data = JSON.parse(response.body, symbolize_names: true)
+
+      expect(weather_data[:data][:attributes][:weather_description]).to_not eq(nil)
+      expect(weather_data[:data][:attributes][:feels_like]).to_not eq(nil)
+      expect(weather_data[:data][:attributes][:humidity]).to_not eq(nil)
+      expect(weather_data[:data][:attributes][:uv_index]).to_not eq(nil)
+      expect(weather_data[:data][:attributes][:sunrise_time]).to_not eq(nil)
+      expect(weather_data[:data][:attributes][:sunset_time]).to_not eq(nil)
+      end
     end
 
     describe "Forecast Background Images" do
