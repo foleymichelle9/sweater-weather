@@ -16,8 +16,6 @@ class Forecast
               :location_info
 
   def initialize(weather_info, map_object)
-    #@timezone_offset = weather_info[:timezone_offset]
-    #require "pry"; binding.pry
     @date_time = weather_info[:current][:dt]
     @actual_temp = weather_description = weather_info[:current][:temp].to_i
     @high_temp = weather_info[:daily][0][:temp][:max].to_i
@@ -35,18 +33,15 @@ class Forecast
     @location_info = location(map_object)
   end
 
-
   def hour_info(hourly_json)
-
-  hourly_json.map do |hour|
-    {
-    time: hour[:dt],
-    temp: hour[:temp],
-    description: hour[:weather][0][:description]
-    }
+    hourly_json.map do |hour|
+      {
+      time: hour[:dt],
+      temp: hour[:temp],
+      description: hour[:weather][0][:description]
+      }
+    end
   end
-
-end
 
   def week_info(weekly_json)
     weekly_json.map do |week|
