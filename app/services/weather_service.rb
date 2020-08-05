@@ -7,7 +7,6 @@ class WeatherService
 
   private
 
-
   def get_weather_info(map_object)
     weather_response = Faraday.get("https://api.openweathermap.org/data/2.5/onecall") do |req|
      req.params["appid"] = ENV["Weather_API"]
@@ -18,6 +17,5 @@ class WeatherService
      req.params[:exclude] = "minutely"
    end
     weather_data = JSON.parse(weather_response.body, symbolize_names: true)
-    #require "pry"; binding.pry
   end
 end

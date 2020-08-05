@@ -8,6 +8,7 @@ class Api::V1::SessionsController < ApplicationController
       render json: { error: "Bad credentials" }, status: 422
     end
   end
+
   private
 
   def user_params
