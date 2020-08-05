@@ -1,4 +1,4 @@
-class WeatherSerializer
+class ForecastSerializer
   include FastJsonapi::ObjectSerializer
   attributes  :location_info,
               :current_time_month_day,
@@ -14,4 +14,6 @@ class WeatherSerializer
               :sunset_time,
               :week_weather_forecast,
               :hourly_weather_forecast
+
+  set_id { |i| i = 1 }
 end

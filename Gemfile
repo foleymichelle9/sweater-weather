@@ -14,7 +14,7 @@ gem 'puma', '~> 3.11'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -24,18 +24,25 @@ gem 'puma', '~> 3.11'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'rspec-rails'
-gem 'faraday'
-gem 'pry'
-gem 'figaro'
 gem 'fast_jsonapi'
+gem 'figaro'
+gem 'to_words'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'webmock'
+  gem 'vcr'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'capybara'
+  gem 'pry'
+  gem 'launchy'
+  gem 'faraday'
+  gem 'shoulda-matchers'
+  gem 'simplecov'
 end
 
 group :development do
